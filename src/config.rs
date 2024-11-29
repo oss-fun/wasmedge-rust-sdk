@@ -101,6 +101,8 @@ impl ConfigBuilder {
             inner.count_instructions(stat_config.count_instructions);
             inner.measure_cost(stat_config.measure_cost);
             inner.measure_time(stat_config.measure_time);
+            inner.restore(stat_config.restore_flag);
+            inner.set_image_dir(&stat_config.image_dir);
         }
         #[cfg(feature = "aot")]
         if let Some(compiler_config) = self.compiler_config {
