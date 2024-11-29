@@ -675,6 +675,7 @@ pub struct StatisticsConfigOptions {
     count_instructions: bool,
     measure_cost: bool,
     measure_time: bool,
+    hoge: bool,
 }
 impl StatisticsConfigOptions {
     /// Creates a new instance of [StatisticsConfigOptions].

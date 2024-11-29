@@ -122,19 +122,20 @@ impl Executor {
         if ctx.is_null() {
             Err(Box::new(WasmEdgeError::ExecutorCreate))
         } else {
-            #[cfg(all(target_os = "linux", not(target_env = "musl")))]
-            unsafe {
-                ffi::WasmEdge_ExecutorExperimentalRegisterPreHostFunction(
-                    ctx,
-                    std::ptr::null_mut(),
-                    Some(pre_host_func),
-                );
-                ffi::WasmEdge_ExecutorExperimentalRegisterPostHostFunction(
-                    ctx,
-                    std::ptr::null_mut(),
-                    Some(post_host_func),
-                );
-            }
+            // NOTE: Unsupported WasmEdge_ExecutorExperimental*
+            // #[cfg(all(target_os = "linux", not(target_env = "musl")))]
+            // unsafe {
+            //     ffi::WasmEdge_ExecutorExperimentalRegisterPreHostFunction(
+            //         ctx,
+            //         std::ptr::null_mut(),
+            //         Some(pre_host_func),
+            //     );
+            //     ffi::WasmEdge_ExecutorExperimentalRegisterPostHostFunction(
+            //         ctx,
+            //         std::ptr::null_mut(),
+            //         Some(post_host_func),
+            //     );
+            // }
 
             Ok(Executor {
                 inner: InnerExecutor(ctx),
