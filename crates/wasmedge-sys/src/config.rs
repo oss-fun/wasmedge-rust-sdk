@@ -1,6 +1,7 @@
 //! Defines WasmEdge Config struct.
 
 use crate::{error::WasmEdgeError, ffi, WasmEdgeResult};
+use std::ffi::CString;
 #[cfg(feature = "aot")]
 use wasmedge_types::{CompilerOptimizationLevel, CompilerOutputFormat};
 
@@ -753,6 +754,31 @@ impl Config {
     pub fn is_time_measuring(&self) -> bool {
         unsafe { ffi::WasmEdge_ConfigureStatisticsIsTimeMeasuring(self.inner.0) }
     }
+
+    /// Sets the time measuring option. By default, the option is disabled.
+    ///
+    /// # Argument
+    ///
+    /// * `flag` - Whether support time measuring or not when execution after AOT compilation.
+    pub fn restore(&mut self, flag: bool) {
+        unsafe { ffi::WasmEdge_ConfigureStatisticsSetRestoreFlag(self.inner.0, flag) }
+    }
+
+    /// Checks if the time measuring option turns on or not.
+    pub fn is_restore(&self) -> bool {
+        unsafe { ffi::WasmEdge_ConfigureStatisticsIsRestore(self.inner.0) }
+    }
+
+    /// Sets the time measuring option. By default, the option is disabled.
+    ///
+    /// # Argument
+    ///
+    /// * `flag` - Whether support time measuring or not when execution after AOT compilation.
+    pub fn set_image_dir(&mut self, path: &str) {
+        let c_str = CString::new(path).unwrap();
+        unsafe { ffi::WasmEdge_ConfigureStatisticsSetImageDir(self.inner.0, c_str.as_ptr()) }
+    }
+
 
     /// Provides a raw pointer to the inner Configure context.
     #[cfg(feature = "ffi")]

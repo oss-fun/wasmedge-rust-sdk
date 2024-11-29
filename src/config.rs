@@ -682,12 +682,13 @@ impl Default for RuntimeConfigOptions {
 ///  - `measure_cost` determines if measuring the instruction costs when running a compiled or pure WASM.
 ///   
 ///  - `measure_time` determines if measuring the running time when running a compiled or pure WASM.
-#[derive(Debug, Default, Clone, Copy)]
+#[derive(Debug, Default, Clone)]
 pub struct StatisticsConfigOptions {
     count_instructions: bool,
     measure_cost: bool,
     measure_time: bool,
-    hoge: bool,
+    restore_flag: bool,
+    image_dir: String,
 }
 impl StatisticsConfigOptions {
     /// Creates a new instance of [StatisticsConfigOptions].
@@ -727,6 +728,28 @@ impl StatisticsConfigOptions {
     pub fn measure_time(self, enable: bool) -> Self {
         Self {
             measure_time: enable,
+            ..self
+        }
+    }
+
+    /// Sets the restore flag.
+    ///
+    /// # Argument
+    ///
+    pub fn restore_flag(self, enable: bool) -> Self {
+        Self {
+            restore_flag: enable,
+            ..self
+        }
+    }
+
+    /// Sets the time image dir.
+    ///
+    /// # Argument
+    ///
+    pub fn image_dir(self, path: String) -> Self {
+        Self {
+            image_dir: path,
             ..self
         }
     }
